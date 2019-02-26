@@ -1,0 +1,132 @@
+index.html<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Animaciones Multiples</title>
+
+	<style>
+		body{
+			display: flex;
+			/*align-items: center;*/
+			align-items: flex-start;
+			justify-content: center;
+			height: 100vh;
+			color: white;
+			font-family: Arial;
+			perspective: 200px;
+		}
+
+		.container{
+			border: 1px solid red;
+			width: 100%;
+		}
+		
+		/*Cuando me posicione sobre container se aplica algo a cuadrado*/
+		.container:hover .cuadrado{
+			animation-play-state: paused;
+		}
+
+		.cuadrado{
+			width: 200px;
+			height: 200px;
+			background: red;
+			margin: 20px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			/*transition: .3s; 300ms*/
+			/*asi se declara mas de una animacion para el elemento*/
+			/*animation-name: cuadrado, rebote; /*rebote;*/*/
+			/*animation-duration: 3s, .3s;*/
+			/*animation-delay: 1s;*/
+			/*animation-iteration-count: 2;*/
+			animation-iteration-count: infinite, 20;
+
+			/*animation-direction: reverse;*/
+			animation-direction: alternate;
+			/*animation-fill-mode: forwards;*/
+			/*animation-play-state: paused;*/
+			/*animation-play-state: running;*/
+			position: relative;
+
+			/*animation-timing-function: cubic-bezier(1, 1, 1, 1); =linear*/
+			/*animation-timing-function: ease;*/
+			animation-timing-function: linear, ease-in-out;
+			/*animation-timing-function: ease-in;*/
+			/*animation-timing-funvtion: ease-out;*/
+			/*animation-timing-function: ease-in-out;*/
+			/*animation-timing-function: linear;*/
+
+			/*CONFIGURAR LA ANIMACIÓN POR PASOS (fRAMES POR SEGUNDOS)*/
+			/*animation-timing-function: steps(60);*/
+			/*animation-timing-function: steps(5);*/
+
+			/*animation-timing-function: cubic-bezier(1, 1, 1, 1);*/
+			/*animation-timing-function: cubic-bezier(0,1,1,-0.01); */
+			transition:3s;
+			will-change: opacity, transform;
+			/*will change se utiliza para optimizar una animacion*/
+			/*esta propiedad le avisa al navegador que el elemento sufrira un cambio y el navegador se prepara para optimizar ese cambio */
+			/*opacity y transform son propiedades que estan optimizadas para trabajar con will-change*/
+		}
+
+		.cuadrado:hover{
+			opacity: 0;
+			transform: scale(1.2);
+		}
+		@keyframes cuadrado{
+			0%{
+				/*opacity: 1;*/
+				left: 0;
+			}
+			100%{
+				/*opacity: 0;*/
+				left: calc(100% - 240px);
+				/*border-bottom-right-radius: 30%; */
+				/*border-top-right-radius: 30%;*/
+			}
+		}
+		@keyframes escalera{
+			/*transform translate cambia a posicion de un elemento*/
+			from{
+				transform: translateY(0);
+			}
+			to{
+				transform: translateY(500px);	
+			}
+		}
+		@keyframes rebote{
+			/*en este keyframes se utilizaran shorcuts*/
+			/*from = 0%*/
+			from{
+				transform: translateY(0);
+			}
+			/*to = 100%*/
+			to{
+				transform: translateY(100px) scale(1, .8);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="cuadrado" id="cuadrado">Hola Mundo</div>
+	</div>
+
+	<script>
+		const $cuadrado = document.getElementById('cuadrado');
+		// $cuadrado.addEventListener('nombre del evento', 'que hago cuando el evento ocurra');
+		// $cuadrado.addEventListener('animationstart', (event) => {}) //obtener lo ocure al inicio de la animacion
+		// $cuadrado.addEventListener('animationiteration', (event) => {}) //obtener lo que ocurre en la iteracion de la animacion
+		$cuadrado.addEventListener('animationend', (event) => {
+			// console.log(event);
+			if(event.animationName === 'rebote')
+			{
+				$cuadrado.style.animationName = 'cuadrado escalera';
+				$cuadrado.style.animationDuration = '3s';
+			}
+		}); 
+	</script>
+</body>
+</html>

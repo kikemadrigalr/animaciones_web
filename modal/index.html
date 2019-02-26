@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Modal</title>
+
+	<style>
+		body{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: Arial;
+			margin: 0;
+			flex-direction: column;
+		}
+
+		.modal{
+			width: 500px;
+			background: white;
+			/*animation: name time estado;*/
+			/*animation: animationIn .8s;*/
+			/*animation: animationIn .8s alternate infinite;*/
+			/*animation: modalIn .8s forwards;*/
+			padding: 2em;
+			border-radius: .5em;
+			text-align: center;
+			/*margin-top: -3000px;*/
+		}
+
+		.overlay{
+			background: rgba(0, 0, 0, .5);
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: 1.1s ease-in;
+			opacity: 0;
+			visibility: hidden;
+		}
+		.overlay.active{
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.btn{
+			text-align: center;
+			background: ligthgray;
+			padding: .6em .8em .8em;
+			border: none;
+			color: white;
+			margin: 5px;
+			border-radius: 5px;
+			cursor: pointer;
+			box-shadow: inset 0 -.2em rgba(0,0,0, .2);
+			outline: 0;
+			transition: .2s;
+			will-change: transform;
+		}
+
+		.btn:active{
+			transform: scale(.9);
+		}
+
+		.btn.primary{
+			background: #7dc800;
+		}
+
+		.btn.warning{
+			background: #ff463b;
+		}
+
+		.close{
+			font-size: 1em;
+			width: 3em;
+			text-align: right;
+			margin-right: 0;
+			float: right;
+		}
+
+		@keyframes modalIn{
+			0%{
+				transform: translateY(-3000px);
+			}
+			60%{
+				transform: translateY(25px);
+			}
+			75%{
+				transform: translateY(-10px);
+			}
+			90%{
+				transform: translateY(5px);
+			}
+		}
+
+		@keyframes modalOut{
+			0%{
+				transform: translateY(5px);
+			}
+			60%{
+				transform: translateY(-10px);
+			}
+			75%{
+				transform: translateY(25px);
+			}
+			100%{
+				transform: translateY(-3000px);
+			}
+		}
+	</style>
+</head>
+<body>
+	<img src="platzi.png" alt="platzi" id="platziImg">
+
+	<div class="overlay" id="overlay">
+		<div class="modal" id="modal">
+			<div class="close"><span id="close">X</span></div>
+			<h1>Atención</h1>
+
+			<p>Estas a punto de crear ua ventana de modal muy Cool | guay | chevere</p>
+
+			<p>Te Gustó?</p>
+
+			<button class="btn primary" id="hide-modal">Sí, está genial</button>
+			<button class="btn warning" id="noButton">No, :(</button>
+		</div>
+	</div>
+	
+	<script>
+		const $hideButton = document.getElementById('hide-modal');
+		const $modal = document.getElementById('modal');
+		const $overlay = document.getElementById('overlay');
+
+		$hideButton.addEventListener('click', (event) => {
+			$modal.style.animation = 'modalOut .8s forwards';
+			$overlay.classList.remove('active');
+		});
+
+
+		const $imgPlatzi = document.getElementById('platziImg');
+
+		$imgPlatzi.addEventListener('click', (event) => {
+			$modal.style.animation = 'modalIn .8s forwards';
+			$overlay.classList.add('active');
+			console.log(event);
+		});
+
+		const $noButton = document.getElementById('noButton');
+
+		$noButton.addEventListener('click', (event) => {
+			$modal.style.animation = 'modalOut .8s forwards';
+			$overlay.classList.remove('active');
+		})
+
+		$closeButton = document.getElementById('close');
+		$closeButton.addEventListener('click', (event) => {
+			$modal.style.animation = 'modalOut .8s forwards';
+			$overlay.classList.remove('active');
+		})
+
+		$overlay.addEventListener('click', (event) => {
+			console.log(event);
+			if(event.srcElement.id == 'overlay')
+			{
+				$modal.style.animation = 'modalOut .8s forwards';
+				$overlay.classList.remove('active');
+			}
+		})
+	</script>
+</body>
+</html>
